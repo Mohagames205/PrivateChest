@@ -225,6 +225,12 @@ class EventListener implements Listener
     {
         if(!$e->getBlock() instanceof Chest) return;
 
+        if(!$e->getPlayer()->hasPermission("chest.admin"))
+        {
+            $e->getPlayer()->sendMessage("§cHeyla! U heeft geen permissions om dit te doen.");
+            return;
+        }
+
         $chest = PrivateChest::get($e->getBlock());
         if(!is_null($chest))
         {
