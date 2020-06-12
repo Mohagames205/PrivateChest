@@ -256,7 +256,7 @@ class EventListener implements Listener
 
         $chest = PrivateChest::get($e->getBlock());
 
-        if(!$e->getPlayer()->hasPermission("chest.admin"))
+        if(!$e->getPlayer()->hasPermission("chest.admin") && !$chest->getPlot()->isOwner($player->getName()))
         {
             $e->getPlayer()->sendMessage("§cHeyla! U heeft geen permissions om dit te doen.");
             return;
