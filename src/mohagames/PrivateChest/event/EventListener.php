@@ -78,8 +78,6 @@ class EventListener implements Listener
 
         if(is_null($chest)) return;
 
-
-
         $members = $chest->getMembers();
         $member_string = join(", ", $members);
         $member_string = !empty($members) ? $member_string : "§cGeen leden";
@@ -99,8 +97,6 @@ class EventListener implements Listener
         {
             $chest->delete();
         }
-
-
     }
 
     public function chestCreationInteract(PlayerInteractEvent $e)
@@ -129,7 +125,6 @@ class EventListener implements Listener
 
         PrivateChest::save($e->getBlock());
         $player->sendMessage("§aDe kist is succesvol vergrendeld!");
-
     }
 
     public function addMemberInteract(PlayerInteractEvent $e)
@@ -169,7 +164,6 @@ class EventListener implements Listener
             $player->sendMessage("§cDeze speler is al een member van de chest.");
             return;
         }
-
 
         $chest->addMember($member);
         $player->sendMessage("§aHet lid is succesvol toegevoegd!");
@@ -218,7 +212,6 @@ class EventListener implements Listener
 
         $chest->removeMember($member);
         $player->sendMessage("§aHet lid is succesvol verwijderd!");
-
     }
 
     public function onChestBreak(BlockBreakEvent $e)
@@ -237,9 +230,6 @@ class EventListener implements Listener
             $chest->delete();
             $e->getPlayer()->sendMessage("§aDe chest is succesvol ontgrendeld!");
         }
-
-
-
     }
 
     public function chestDeletionInteract(PlayerInteractEvent $e)
@@ -256,15 +246,15 @@ class EventListener implements Listener
 
         $chest = PrivateChest::get($e->getBlock());
 
-        if(!$e->getPlayer()->hasPermission("chest.admin") && !$chest->getPlot()->isOwner($player->getName()))
-        {
-            $e->getPlayer()->sendMessage("§cHeyla! U heeft geen permissions om dit te doen.");
-            return;
-        }
-
         if(is_null($chest))
         {
             $player->sendMessage("§cDeze kist is niet vergrendeld!");
+            return;
+        }
+
+        if(!$e->getPlayer()->hasPermission("chest.admin") && !$chest->getPlot()->isOwner($player->getName()))
+        {
+            $e->getPlayer()->sendMessage("§cHeyla! U heeft geen permissions om dit te doen.");
             return;
         }
 
